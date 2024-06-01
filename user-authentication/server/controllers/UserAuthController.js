@@ -76,3 +76,19 @@ exports.logout = async (req, res) => {
     return res.status(500).send({ message: "Error while logout", error });
   }
 };
+
+exports.myDetails = async (req, res) => {
+  const userId = req._id;
+
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).send({ message: "Cannot find User!" });
+    }
+    return res.status(200).send({ user });
+  } catch (error) {
+    return res
+      .status(500)
+      .send({ message: "error getting my details", error: error });
+  }
+};
